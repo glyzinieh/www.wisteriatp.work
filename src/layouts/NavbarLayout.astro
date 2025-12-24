@@ -2,13 +2,14 @@
 import Navbar from "@/components/navbar/Navbar.astro";
 import ContainerLayout from "./ContainerLayout.astro";
 
-const { title, description, ogImageUrl } = Astro.props;
+const { title, description, ogImageUrl, noindex = false } = Astro.props;
 ---
 
 <ContainerLayout
     title={title}
     description={description}
     ogImageUrl={ogImageUrl}
+    noindex={noindex}
 >
     <Navbar slot="outer" />
     <div class="my-4">

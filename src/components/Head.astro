@@ -8,6 +8,7 @@ const {
     ogImageUrl = SITE_URL
         ? new URL("og.png", new URL(BASE_PATH, SITE_URL)).href
         : `${BASE_PATH}${BASE_PATH.endsWith("/") ? "" : "/"}og.png`,
+    noindex = false,
     ...props
 } = Astro.props;
 
@@ -17,10 +18,11 @@ const fullTitle = title ? `${title} - wisteriatp.work` : "wisteriatp.work";
 <link rel="sitemap" href="/sitemap-index.xml" />
 <title>{fullTitle}</title>
 <link rel="favicon" href="/favicon.ico" />
+<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 <meta name="description" content={description} />
 
 <meta property="og:title" content={fullTitle} />
-<mata property="og:type" content="website"></mata>
-<mata property="og:url" content={SITE_URL}></mata>
-<mata property="og:description" content={description}></mata>
+<meta property="og:type" content="website" />
+<meta property="og:url" content={SITE_URL} />
+<meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageUrl} />

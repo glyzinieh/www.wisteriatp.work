@@ -1,6 +1,6 @@
 ---
 import Head from "@/components/Head.astro";
-const { title, description, ogImageUrl } = Astro.props;
+const { title, description, ogImageUrl, noindex = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -9,7 +9,12 @@ const { title, description, ogImageUrl } = Astro.props;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <Head title={title} description={description} ogImageUrl={ogImageUrl} />
+        <Head
+            title={title}
+            description={description}
+            ogImageUrl={ogImageUrl}
+            noindex={noindex}
+        />
 
         <!-- Bootstrap CSS -->
         <link
