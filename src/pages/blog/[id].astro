@@ -1,0 +1,30 @@
+---
+import NavbarLayout from "@/layouts/NavbarLayout.astro";
+import { getCollection, render } from "astro:content";
+import BlogContent from "./_components/BlogContent.astro";
+
+export async function getStaticPaths() {
+    const blogPosts = await getCollection("blog");
+    return blogPosts.map((post) => ({
+        params: { id: post.id },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<NavbarLayout
+    title={post.data.title}
+    description={post.data.description}
+    noindex={post.data.isIndexed === false}
+>
+    <article>
+        <h1>{post.data.title}</h1>
+        <p class="text-muted">
+            {new Date(post.data.publishedAt).toLocaleDateString()}
+        </p>
+        <BlogContent Content={Content} />
+    </article>
+</NavbarLayout>

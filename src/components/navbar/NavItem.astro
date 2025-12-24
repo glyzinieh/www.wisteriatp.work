@@ -1,6 +1,7 @@
 ---
 const { href } = Astro.props;
-const isCurrent = Astro.url.pathname === href;
+
+const isCurrent = Astro.url.pathname.startsWith(href);
 ---
 
 <li class="nav-item">

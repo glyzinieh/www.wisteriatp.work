@@ -1,0 +1,17 @@
+---
+const { title, description, publishedAt, href } = Astro.props;
+---
+
+<div class="col-md-6 col-lg-4 h-100">
+    <div class="card">
+        <div class="card-body">
+            <a href={href} class="text-decoration-none">
+                <h2 class="card-title">{title}</h2>
+            </a>
+            <p class="card-text">{description}</p>
+            <p class="text-muted text-end">
+                {new Date(publishedAt).toLocaleDateString()}
+            </p>
+        </div>
+    </div>
+</div>

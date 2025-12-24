@@ -1,3 +1,4 @@
+import { blogLoader } from "@/lib/blog";
 import { file } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
@@ -16,4 +17,8 @@ const socials = defineCollection({
     })
 });
 
-export const collections = { socials };
+const blog = defineCollection({
+    loader: blogLoader({ url: import.meta.env.BLOG_CONTENT_DOMAIN }),
+});
+
+export const collections = { socials, blog };

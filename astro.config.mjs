@@ -1,10 +1,13 @@
 // @ts-check
+import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import remarkGfm from 'remark-gfm';
+import remarkNotes from 'remark-notes-plugin';
 import { loadEnv } from 'vite';
 
-import sitemap from '@astrojs/sitemap';
 
-// const { IMAGE_DOMAIN } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
+
+const { IMAGE_DOMAIN } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
 const { SITE_URL, BASE_PATH } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
 
 // https://astro.build/config
@@ -14,7 +17,14 @@ export default defineConfig({
 
     image: {
         layout: 'constrained',
-        //     domains: [IMAGE_DOMAIN],
+        domains: [IMAGE_DOMAIN],
+    },
+
+    markdown: {
+        remarkPlugins: [
+            remarkGfm,
+            remarkNotes
+        ],
     },
 
     integrations: [sitemap()]

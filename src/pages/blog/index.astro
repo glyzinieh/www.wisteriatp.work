@@ -1,7 +1,28 @@
 ---
 import NavbarLayout from "@/layouts/NavbarLayout.astro";
+import { getCollection } from "astro:content";
+import BlogCard from "./_components/BlogCard.astro";
+
+const blogPosts = await getCollection("blog");
+const filteredPosts = blogPosts.filter((post) => post.data.isIndexed !== false);
 ---
 
 <NavbarLayout title="Blog" description="ブログ一覧ページ">
     <h1>Blog</h1>
+    {
+        filteredPosts.length !== 0 ? (
+            <div class="row">
+                {filteredPosts.map((post) => (
+                    <BlogCard
+                        title={post.data.title}
+                        description={post.data.description}
+                        publishedAt={post.data.publishedAt}
+                        href={`/blog/${post.id}`}
+                    />
+                ))}
+            </div>
+        ) : (
+            <p>記事がまだありません。</p>
+        )
+    }
 </NavbarLayout>
