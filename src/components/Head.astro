@@ -6,8 +6,8 @@ const {
     title,
     description = "Welcome to wisteriatp's portfolio website!",
     ogImageUrl = SITE_URL
-        ? new URL("ogp.png", new URL(BASE_PATH, SITE_URL)).href
-        : `${BASE_PATH}${BASE_PATH.endsWith("/") ? "" : "/"}ogp.png`,
+        ? new URL("og.png", new URL(BASE_PATH, SITE_URL)).href
+        : `${BASE_PATH}${BASE_PATH.endsWith("/") ? "" : "/"}og.png`,
     ...props
 } = Astro.props;
 
