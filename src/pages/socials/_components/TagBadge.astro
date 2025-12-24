@@ -1,0 +1,23 @@
+---
+export type TagName = "Develop" | "Photo" | "Music" | "Other";
+
+interface Props {
+    tagName: TagName;
+}
+
+const { tagName } = Astro.props;
+
+const color = {
+    Develop: "#007bff",
+    Photo: "#28a745",
+    Music: "#ffc107",
+    Other: "#6c757d",
+}[tagName];
+---
+
+<span
+    class="badge me-1"
+    style={`background-color: ${color || "#6c757d"}; color: #fff;`}
+>
+    {tagName}
+</span>

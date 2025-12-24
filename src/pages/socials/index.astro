@@ -1,0 +1,86 @@
+---
+import NavbarLayout from "@/layouts/NavbarLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import SocialCard from "./_components/SocialCard.astro";
+
+const socials: CollectionEntry<"socials">[] = await getCollection("socials");
+---
+
+<NavbarLayout title="Social Links" description="SNSリンク一覧ページ">
+    <div class="min-vh-100">
+        <h1 class="mb-3">Social Links</h1>
+
+        <ul
+            class="nav nav-tabs mb-4 justify-content-center nav-justified"
+            id="tag-tab"
+        >
+            <li class="nav-item">
+                <a class="nav-link active tag-tab" data-tag="all" href="#"
+                    >All</a
+                >
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tag-tab" data-tag="Develop" href="#"
+                    >Develop</a
+                >
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tag-tab" data-tag="Photo" href="#">Photo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tag-tab" data-tag="Music" href="#">Music</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tag-tab" data-tag="Other" href="#">Other</a>
+            </li>
+        </ul>
+
+        <div class="row g-3">
+            {
+                socials.map((social) => (
+                    <SocialCard
+                        title={social.data.title}
+                        username={social.data.username}
+                        description={social.data.description}
+                        href={social.data.href}
+                        linkText={social.data.linkText}
+                        imageFileName={social.data.imageFileName}
+                        imageAlt={social.data.imageAlt}
+                        tags={social.data.tags}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</NavbarLayout>
+
+<script>
+    const tagTabs = document.querySelectorAll(".tag-tab");
+    const socialCards = document.querySelectorAll("[data-tags]");
+
+    tagTabs.forEach((tab) => {
+        tab.addEventListener("click", (event) => {
+            event.preventDefault();
+            const selectedTag = tab.getAttribute("data-tag");
+
+            tagTabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            socialCards.forEach((card) => {
+                const cardTags = card
+                    .getAttribute("data-tags")
+                    ?.split(",")
+                    .map((tag) => tag.trim());
+
+                const htmlCard = card as HTMLElement;
+                if (selectedTag === "all" || cardTags?.includes(selectedTag!)) {
+                    htmlCard.style.display = "";
+                    htmlCard.classList.remove("d-none");
+                } else {
+                    htmlCard.classList.add("d-none");
+                }
+            });
+        });
+    });
+</script>

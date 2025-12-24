@@ -1,0 +1,33 @@
+---
+import { THEME_COLOR } from "@/lib/constants.ts";
+import NavItem from "./NavItem.astro";
+
+const { stickyTop = true } = Astro.props;
+---
+
+<nav
+    class={`navbar navbar-expand-lg ${stickyTop && "sticky-top"}`}
+    style={`background-color: ${THEME_COLOR};`}
+>
+    <div class="container">
+        <a class="navbar-brand" href="/">wisteriatp.work</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <NavItem href="/">Home</NavItem>
+                <NavItem href="/socials">Socials</NavItem>
+                <!-- <NavItem href="/blog">Blog</NavItem> -->
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { title, description, ogImageUrl } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogImageUrl={ogImageUrl}>
+    <slot name="outer" />
+    <div class="container">
+        <slot />
+    </div>
+</BaseLayout>

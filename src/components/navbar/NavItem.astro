@@ -1,0 +1,14 @@
+---
+const { href } = Astro.props;
+const isCurrent = Astro.url.pathname === href;
+---
+
+<li class="nav-item">
+    <a
+        class={`nav-link ${isCurrent ? "active" : ""}`}
+        aria-current={isCurrent ? "page" : undefined}
+        href={href}
+    >
+        <slot />
+    </a>
+</li>
