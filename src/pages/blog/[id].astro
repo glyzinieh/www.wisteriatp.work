@@ -19,6 +19,7 @@ const { Content } = await render(post);
     title={post.data.title}
     description={post.data.description}
     noindex={post.data.isIndexed === false}
+    ogImageUrl={post.data.coverImageUrl || null}
 >
     <article>
         <h1>{post.data.title}</h1>
