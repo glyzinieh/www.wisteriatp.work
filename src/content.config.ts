@@ -18,7 +18,7 @@ const socials = defineCollection({
 });
 
 const blog = defineCollection({
-    loader: blogLoader({ url: import.meta.env.BLOG_CONTENT_DOMAIN }),
+    loader: blogLoader({ url: import.meta.env.BLOG_CONTENT_URL }),
 });
 
 export const collections = { socials, blog };
