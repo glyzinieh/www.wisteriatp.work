@@ -4,12 +4,10 @@ import { defineConfig } from 'astro/config';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkNotes from 'remark-notes-plugin';
-import { loadEnv } from 'vite';
 
 
 
-const { IMAGE_DOMAIN } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
-const { SITE_URL, BASE_PATH } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
+const { SITE_URL, BASE_PATH, BLOG_CONTENT_DOMAIN } = import.meta.env;
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +16,7 @@ export default defineConfig({
 
     image: {
         layout: 'full-width',
-        domains: [IMAGE_DOMAIN],
+        domains: [BLOG_CONTENT_DOMAIN],
     },
 
     markdown: {
