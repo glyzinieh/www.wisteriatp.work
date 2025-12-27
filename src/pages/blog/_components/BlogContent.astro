@@ -1,8 +1,50 @@
 ---
 import "github-markdown-css/github-markdown.css";
-import "remark-notes-plugin/styles.css";
 
 const { Content } = Astro.props;
 ---
 
-<Content />
+<div class="markdown-content">
+    <Content />
+</div>
+
+<style is:global>
+    /* Light theme (default) */
+    .markdown-content {
+        --note-bg: var(--bs-info);
+        --note-border: var(--bs-info-border-subtle);
+        --note-text: var(--bs-body-color);
+
+        --tip-bg: var(--bs-success-bg);
+        --tip-border: var(--bs-success-border);
+        --tip-text: var(--bs-body-color);
+
+        --important-bg: var(--bs-warning);
+        --important-border: var(--bs-warning-border);
+        --important-text: var(--bs-body-color);
+
+        line-height: 2;
+    }
+
+    blockquote[class*="remark-note-note"] .remark-note-content {
+        color: var(--note-text);
+    }
+
+    blockquote[class*="remark-note-tip"] .remark-note-content {
+        color: var(--tip-text);
+    }
+
+    blockquote[class*="remark-note-important"] .remark-note-content {
+        color: var(--important-text);
+    }
+
+    img {
+        max-width: 90%;
+        max-height: 75vh;
+        height: auto;
+    }
+
+    iframe {
+        max-width: 100%;
+    }
+</style>

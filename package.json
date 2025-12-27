@@ -13,6 +13,7 @@
     "astro": "^5.16.2",
     "github-markdown-css": "^5.8.1",
     "gray-matter": "^4.0.3",
+    "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "remark-notes-plugin": "^2.0.0"
   }

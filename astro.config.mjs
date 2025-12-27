@@ -1,6 +1,7 @@
 // @ts-check
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkNotes from 'remark-notes-plugin';
 import { loadEnv } from 'vite';
@@ -16,13 +17,14 @@ export default defineConfig({
     base: BASE_PATH ? BASE_PATH : '/',
 
     image: {
-        layout: 'constrained',
+        layout: 'full-width',
         domains: [IMAGE_DOMAIN],
     },
 
     markdown: {
         remarkPlugins: [
             remarkGfm,
+            remarkBreaks,
             remarkNotes
         ],
     },

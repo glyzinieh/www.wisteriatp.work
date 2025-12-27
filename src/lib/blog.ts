@@ -34,7 +34,7 @@ function blogLoader(options: { url: string }): Loader {
                     // 画像のURLを絶対パスに変換
                     rawContent = rawContent.replace(
                         /!\[(.*?)\]\((?!\s*https?:\/\/)(.*?)\)/g,
-                        `![$1](${baseUrl}/blog/imgs/$2)`
+                        `![$1](${baseUrl}blog/$2)`
                     );
 
                     const { data, content } = grayMatter(rawContent);
@@ -49,6 +49,12 @@ function blogLoader(options: { url: string }): Loader {
                         continue;
                     }
 
+                    // coverImageUrlを絶対パスに変換
+                    let coverImageUrl = data.coverImageUrl;
+                    if (coverImageUrl && !coverImageUrl.match(/^\s*https?:\/\//)) {
+                        coverImageUrl = `${baseUrl}blog/${coverImageUrl}`;
+                    }
+
                     // データをパースしてストアに保存
                     const parsedData = await parseData({
                         id: id,
@@ -58,7 +64,7 @@ function blogLoader(options: { url: string }): Loader {
                             isIndexed: data.isIndexed ?? true,
                             title: data.title,
                             description: data.description || undefined,
-                            coverImageUrl: data.coverImageUrl || undefined,
+                            coverImageUrl: coverImageUrl || undefined,
                         },
                     });
 
