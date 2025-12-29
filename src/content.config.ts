@@ -17,13 +17,14 @@ const socials = defineCollection({
 });
 
 const blog = defineCollection({
-    loader: glob({pattern: "**/*.{md,mdx}", base: "src/data/blog"}),
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "src/data/blog" }),
     schema: z.object({
+        slug: z.string().optional(),
         publishedAt: z.date(),
         isIndexed: z.boolean().default(true),
         title: z.string(),
         description: z.string().optional(),
-        coverImageUrl: z.string().url().optional(),
+        coverImageUrl: z.string().optional(),
     })
 });
 

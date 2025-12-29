@@ -17,7 +17,12 @@ export function fetchBlogContent() {
 
             console.log(`[fetch-blog] Fetching blog content from ${baseUrl.href}...`);
 
-            await fs.rm(outputDir, { recursive: true, force: true });
+
+            const entries = await fs.readdir(outputDir, { withFileTypes: true });
+            await Promise.all(entries
+                .filter(entry => entry.name !== '.gitignore')
+                .map(entry => fs.rm(path.join(outputDir, entry.name), { recursive: true, force: true }))
+            );
             await fs.mkdir(outputDir, { recursive: true });
 
             try {
@@ -38,11 +43,25 @@ export function fetchBlogContent() {
 
                     const filePath = path.join(outputDir, filename);
 
+                    // Extract images from markdown content
                     const imageRegex = /!\[.*?\]\((?!\s*https?:\/\/)(.*?)\)/g;
                     const matches = [...content.matchAll(imageRegex)];
 
-                    await Promise.all(matches.map(async (match) => {
-                        const relativeImagePath = match[1];
+                    // Extract coverImageUrl from frontmatter
+                    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/;
+                    const frontmatterMatch = content.match(frontmatterRegex);
+
+                    const imagePaths: string[] = matches.map(m => m[1]);
+
+                    if (frontmatterMatch) {
+                        const frontmatter = frontmatterMatch[1];
+                        const coverImageMatch = frontmatter.match(/coverImageUrl:\s*['"]?([^'"\n]+)['"]?/);
+                        if (coverImageMatch && !coverImageMatch[1].match(/^\s*https?:\/\//)) {
+                            imagePaths.push(coverImageMatch[1].trim());
+                        }
+                    }
+
+                    await Promise.all(imagePaths.map(async (relativeImagePath) => {
                         const remoteImageUrl = new URL(relativeImagePath, baseUrl);
 
                         const localImagePath = path.join(outputDir, relativeImagePath);
