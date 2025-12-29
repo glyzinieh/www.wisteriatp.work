@@ -34,8 +34,7 @@ jobs:
                   # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
                   TZ: Asia/Tokyo
                   SITE_URL: ${{ vars.SITE_URL }}
-                  BLOG_CONTENT_DOMAIN: ${{ secrets.BLOG_CONTENT_DOMAIN }}
-                  IMAGE_DOMAIN: ${{ secrets.BLOG_CONTENT_DOMAIN }}
+                  BLOG_CONTENT_URL: ${{ secrets.BLOG_CONTENT_URL }}
 
     deploy:
         needs: build
