@@ -1,0 +1,24 @@
+---
+import { THEME_COLOR } from "@/lib/constants";
+
+const isPrivacyPolicy = Astro.url.pathname === "/privacy-policy";
+---
+
+<footer class="pt-4 mt-4 pb-3" style={`background-color: ${THEME_COLOR};`}>
+    <p class="text-center mb-1">&copy; 2025 wisteriatp</p>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a href="/privacy-policy" class="nav-link px-2">Privacy Policy</a>
+        </li>
+    </ul>
+</footer>
+
+<style>
+    footer p {
+        color: rgba(var(--bs-emphasis-color-rgb), 1);
+    }
+
+    footer a {
+        color: rgba(var(--bs-emphasis-color-rgb), 0.65);
+    }
+</style>

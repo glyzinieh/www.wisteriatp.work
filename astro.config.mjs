@@ -7,6 +7,8 @@ import remarkNotes from 'remark-notes-plugin';
 import { loadEnv } from 'vite';
 import { fetchBlogContent } from './plugins/fetch-blog';
 
+import partytown from '@astrojs/partytown';
+
 const { SITE_URL, BASE_PATH } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
 
 export default defineConfig({
@@ -22,7 +24,11 @@ export default defineConfig({
             remarkNotes
         ],
     },
-    integrations: [sitemap()],
+    integrations: [sitemap(), partytown({
+        config: {
+            forward: ["dataLayer.push"],
+        },
+    })],
     vite: {
         plugins: [
             fetchBlogContent()
