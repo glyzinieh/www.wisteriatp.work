@@ -1,5 +1,4 @@
-import { blogLoader } from "@/lib/blog";
-import { file } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 
@@ -18,7 +17,14 @@ const socials = defineCollection({
 });
 
 const blog = defineCollection({
-    loader: blogLoader({ url: import.meta.env.BLOG_CONTENT_URL }),
+    loader: glob({pattern: "**/*.{md,mdx}", base: "src/data/blog"}),
+    schema: z.object({
+        publishedAt: z.date(),
+        isIndexed: z.boolean().default(true),
+        title: z.string(),
+        description: z.string().optional(),
+        coverImageUrl: z.string().url().optional(),
+    })
 });
 
 export const collections = { socials, blog };
