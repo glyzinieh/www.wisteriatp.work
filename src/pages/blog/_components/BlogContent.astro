@@ -43,9 +43,11 @@ const { Content } = Astro.props;
     }
 
     img {
+        width: auto;
         max-width: 90%;
         max-height: 75vh;
-        height: auto;
+        height: auto !important; /* guard against upstream height: 100% */
+        object-fit: contain;
     }
 
     iframe {
