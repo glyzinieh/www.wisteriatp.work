@@ -1,5 +1,6 @@
 ---
 import NavbarLayout from "@/layouts/NavbarLayout.astro";
+import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import BlogContent from "./_components/BlogContent.astro";
 
@@ -15,13 +16,19 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const coverImage = post.data.coverImageUrl
+    ? await getImage({
+          src: post.data.coverImageUrl,
+      })
+    : null;
 ---
 
 <NavbarLayout
     title={post.data.title}
     description={post.data.description}
     noindex={post.data.isIndexed === false}
-    ogImageUrl={post.data.coverImageUrl || null}
+    ogImageUrl={coverImage?.src}
 >
     <article>
         <h1>{post.data.title}</h1>
