@@ -28,7 +28,7 @@ const coverImage = post.data.coverImageUrl
     title={post.data.title}
     description={post.data.description}
     noindex={post.data.isIndexed === false}
-    ogImageUrl={coverImage?.src}
+    ogImageUrl={coverImage ? new URL(coverImage.src, Astro.site).href : null}
 >
     <article>
         <h1>{post.data.title}</h1>
