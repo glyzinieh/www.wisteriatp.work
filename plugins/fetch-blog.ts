@@ -35,10 +35,7 @@ export function fetchBlogContent() {
         name: 'fetch-blog-content',
         async buildStart() {
             const { BLOG_CONTENT_URL } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), "");
-            if (!BLOG_CONTENT_URL) {
-                console.warn('Warning: BLOG_CONTENT_URL is not defined.');
-                return;
-            }
+            if (!BLOG_CONTENT_URL) throw new Error('Environment variable BLOG_CONTENT_URL is not defined.');
 
             const baseUrl = new URL(BLOG_CONTENT_URL);
             const outputDir = path.resolve('src/data/blog');
@@ -91,10 +88,7 @@ export function fetchBlogContent() {
 
                     // コンテンツをダウンロード
                     const res = await fetch(fileUrl.href);
-                    if (!res.ok) {
-                        console.warn(`[fetch-blog] Failed to fetch ${post.filename}`);
-                        return;
-                    }
+                    if (!res.ok) throw new Error(`Failed to fetch post ${post.filename}: ${res.status}`);
                     const remoteContent = await res.text();
 
                     // ファイル書き込み
@@ -145,7 +139,7 @@ export function fetchBlogContent() {
                 console.log(`[fetch-blog] Sync complete. Updated: ${updatedCount}, Skipped (Matched): ${skippedCount}`);
             }
             catch (err) {
-                console.error(`[fetch-blog] Error fetching blog content: ${(err as Error).message}`);
+                throw new Error(`Error fetching blog content: ${(err as Error).message}`);
             }
         }
     };
